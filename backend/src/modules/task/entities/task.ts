@@ -1,8 +1,10 @@
+import { TaskTag } from 'src/modules/tag/entities/task-tag';
 import { Usuario } from 'src/modules/usuario/entities/usuario';
 import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -18,9 +20,6 @@ export class Task {
   @Column({ name: 'descricao' })
   descricao: string;
 
-  @Column({ name: 'tags' })
-  tags: string;
-
   @Column({ name: 'responsavel' })
   responsavel: string;
 
@@ -30,4 +29,8 @@ export class Task {
   @OneToOne(() => Usuario, (usuario) => usuario.id)
   @JoinColumn({ name: 'responsavel', referencedColumnName: 'id' })
   responsavelTask: Usuario;
+
+  @OneToMany(() => TaskTag, (taskTag) => taskTag.taskTag)
+  @JoinColumn([{ name: 'id', referencedColumnName: 'task' }])
+  taskTag: TaskTag[];
 }

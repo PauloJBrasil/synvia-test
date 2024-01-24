@@ -19,7 +19,7 @@ export function MainLayout({ loggedIn }: MainLayoutProps) {
     }
 
     return (
-        <main className="flex h-screen bg-[#f6f6f6]">
+        <main className="flex min-h-screen h-full bg-[#f6f6f6]">
             <section className="flex flex-col w-full mb-9">
                 {loggedIn && (
                     <div className="flex top-0 w-full min-h-16 sm:h-20 justify-around items-center bg-[#c0c0c0]">
@@ -27,7 +27,7 @@ export function MainLayout({ loggedIn }: MainLayoutProps) {
                         <SignOut className="cursor-pointer" size={32} color="#300F72" onClick={() => loggout()} />
                     </div>
                 )}
-                <div className="h-screen mt-8 p-4 sm:px-12 py-0">
+                <div className="h-full mt-8 p-4 sm:px-12 py-0">
                     <Outlet />
                 </div>
             </section>

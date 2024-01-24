@@ -7,6 +7,7 @@ import { api } from "../../services/api";
 import toast from "react-hot-toast";
 import { setCookie } from "../../config/cookies";
 import { useNavigate } from "react-router-dom";
+import TextInput from "../../components/TextInput";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -41,21 +42,22 @@ const Login = () => {
                     <h4 className="font-600 text-center text-2xl">Login</h4>
                     <FormProvider {...form}>
                         <div className="flex flex-col gap-3">
-                            <input className="w-full rounded border-2 px-2 focus:outline-none h-10" {...form.register('email')} name="email" type="email" placeholder="E-mail" />
+                            <TextInput name="email" placeholder="exemplo@mecontrata.com" label="E-mail" type="email" />
                             <div className="w-full relative">
                                 {
                                     showPassword ?
-                                        <EyeSlash className="absolute top-2 right-3 cursor-pointer" size={24} color="#c0c0c0" onClick={() => setShowPassword(!showPassword)} />
+                                        <EyeSlash className="absolute top-2 right-3 cursor-pointer z-10" size={24} color="#c0c0c0" onClick={() => setShowPassword(!showPassword)} />
                                         :
-                                        <Eye className="absolute top-2 right-3 cursor-pointer" size={24} color="#c0c0c0" onClick={() => setShowPassword(!showPassword)} />
+                                        <Eye className="absolute top-2 right-3 cursor-pointer z-10" size={24} color="#c0c0c0" onClick={() => setShowPassword(!showPassword)} />
                                 }
-                                <input className="w-full rounded border-2 px-2 focus:outline-none h-10" {...form.register('senha')} name="senha" type={showPassword ? 'text' : 'password'} placeholder="Senha" />
+                                <TextInput className="w-full" name="senha" label="Senha" type={showPassword ? 'text' : 'password'} />
                             </div>
+
                         </div>
                     </FormProvider>
                     <div className="flex flex-col gap-3">
                         <button className="h-8 rounded text-[#fafafa] px-2 bg-[#35c949]" type="submit" onClick={() => submit()}>Entrar</button>
-                        <button className="h-8 rounded text-[#fafafa] px-2 bg-[#300F72]">Cadastrar</button>
+                        <button className="h-8 rounded text-[#fafafa] px-2 bg-[#300F72]" onClick={() => navigate('/cadastro')}>Cadastrar</button>
                     </div>
                 </div>
             </div>

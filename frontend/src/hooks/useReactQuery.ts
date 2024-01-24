@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { UseQueryOptions, useQuery } from "react-query";
 import { isTruthy } from "../utils/validations";
 import { api } from "../services/api";
+import { getCookie } from "../config/cookies";
 
 type ReactQueryProps = {
     page?: number;
@@ -37,7 +38,10 @@ export const useReactQuery = <T = unknown>(
     cancel?: boolean
   ) => {
     const { baseAPI = api, ...options } = fetchOptions ?? {};
-  
+    
+    const token = getCookie("@token");
+    baseAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+
     const { page, currentFieldByOrder, orderDirection, take, ...rest } =
       query ?? {};
   

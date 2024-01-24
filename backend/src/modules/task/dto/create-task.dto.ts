@@ -1,5 +1,10 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
+class TagDTO {
+  id: string;
+  nameTag: string;
+}
+
 export class CreateTaskDTO {
   @IsNotEmpty()
   titulo: string;
@@ -8,7 +13,7 @@ export class CreateTaskDTO {
   descricao: string;
 
   @IsOptional()
-  tags: string[];
+  tags: TagDTO[];
 
   @IsOptional()
   responsavel: string;

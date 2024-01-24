@@ -26,4 +26,9 @@ export class UsuarioController {
   login(@Body() body: LoginUsuarioDTO) {
     return this.usuarioService.login(body);
   }
+
+  @Post('/validate-token')
+  validateToken(@Body() body: { token: string }) {
+    return this.usuarioService.validateToken(body.token);
+  }
 }

@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { TaskModule } from './modules/task/task.module';
+import { TagModule } from './modules/tag/tag.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,6 +20,7 @@ dotenv.config();
     }),
     UsuarioModule,
     TaskModule,
+    TagModule,
   ],
   controllers: [AppController],
   providers: [AppService],

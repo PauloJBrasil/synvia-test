@@ -1,0 +1,164 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2022": true,
+    "jest": true
+  },
+  "ignorePatterns": [
+    "node_modules/*",
+    ".next/*",
+    ".out/*",
+    "!.prettierrc.js"
+  ], // We don't want to lint generated files nor node_modules, but we want to lint .prettierrc.js (ignored by default by eslint)
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "airbnb",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "eslint-plugin-import-helpers",
+    "prettier"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "rules": {
+    // Principais
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": [
+          "^@/"
+        ]
+      }
+    ],
+    "import/extensions": [
+      "off"
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "absolute",
+          "module",
+          "/^@/",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "warn",
+      {
+        "devDependencies": [
+          "**/*.spec.js"
+        ]
+      }
+    ],
+    "import/no-duplicates": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-curly-brace-presence": "warn",
+    "prefer-template": "warn",
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn", // or "error"
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "no-unused-vars": "warn",
+    "react/no-array-index-key": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "no-extra-boolean-cast": "off",
+    "no-plusplus": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/no-unstable-nested-components": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "import/no-cycle": "off",
+    "no-shadow": "off",
+    "react/jsx-no-bind": [
+      "warn",
+      {
+        "allowFunctions": true,
+        "allowArrowFunctions": true
+      }
+    ],
+    "no-unused-expressions": "off",
+    "no-param-reassign": "off",
+    "eqeqeq": "off",
+    "react/destructuring-assignment": "off",
+    "react/function-component-definition": "off",
+    "consistent-return": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/no-unused-prop-types": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": "off"
+    // Secundarias
+    // "camelcase": "off",
+    // "class-methods-use-this": "off",
+    // "no-useless-constructor": "off",
+    // "no-empty-function": "off",
+    // "lines-between-class-members": "off",
+    // "no-use-before-define": "error",
+    // "react/jsx-no-constructed-context-values": "warn",
+    // "@typescript-eslint/explicit-module-boundary-types": "off",
+    // "react/prop-types": "off",
+    // "no-undef": "off",
+    // "no-nested-ternary": "off",
+    // "react/no-children-prop": "off",
+    // "jsx-a11y/anchor-has-content": "off",
+    // "jsx-a11y/control-has-associated-label": "off",
+    // "no-promise-executor-return": "off"
+  }
+}

@@ -7,6 +7,7 @@ const SelectForm = ({
     control,
     defaultValue,
     children,
+    selected,
     ...props
 }: any) => {
     const labelId = `${name}-label`;

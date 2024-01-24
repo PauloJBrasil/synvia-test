@@ -5,20 +5,72 @@ import { useReactQuery } from "../../hooks/useReactQuery";
 import AutocompleteForm from "../../components/Autocomplete";
 import SelectForm from "../../components/Select";
 import { MenuItem } from "@mui/material";
+import { TextIndent } from "phosphor-react";
+import TextInput from "../../components/TextInput";
+import TextArea from "../../components/TextArea";
+import { api } from "../../services/api";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import { useCallback, useEffect } from "react";
 
 const Task = () => {
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     const form = useForm<any>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            responsavel: ''
+        }
     })
 
-    const { response, isLoading } = useReactQuery<any>('/usuario')
+    const { response } = useReactQuery<any>('/usuario')
+
+    const { response: responseTag, isLoading } = useReactQuery<any>('/tag')
+
+    const getTask = useCallback(() => {
+        api.get(`/task/${id}`).then((response) => {
+            form.setValue('titulo', response.data.titulo)
+            form.setValue('descricao', response.data.descricao)
+            form.setValue('responsavel', response.data.responsavelTask?.id)
+            form.setValue('tags', response.data.taskTag.map((tag: any) => {
+                return {
+                    name: tag.tagTask.nomeTag,
+                    value: tag.tagTask.id
+                }
+            }))
+        }).catch((error) => {
+            console.log(error)
+            toast.error('Ocorreu um erro ao buscar a task, tente novamente mais tarde')
+        })
+    }, [id])
+
+    useEffect(() => {
+        if (id) getTask();
+    }, [id, getTask])
 
     const submit = () => {
-        console.log(form.getValues())
-    }
+        const tags = form.getValues('tags').map((tag: any) => {
+            return {
+                id: tag?.value || null,
+                nameTag: tag?.name ?? tag
+            }
+        })
 
-    console.log(form.watch())
+        const apiTask = id ? api.put : api.post
+
+        apiTask(id ? `/task/${id}` : '/task', {
+            titulo: form.getValues('titulo'),
+            descricao: form.getValues('descricao'),
+            responsavel: form.getValues('responsavel'),
+            tags
+        }).then((response) => {
+            toast.success('Task criada com sucesso')
+            navigate('/')
+        }).catch((error) => {
+            toast.error('Ocorreu um erro ao criar a task, tente novamente mais tarde')
+        })
+    }
 
     return (
         <div className="w-full h-full flex justify-center items-center">
@@ -27,9 +79,9 @@ const Task = () => {
                     <h4 className="font-600 text-center text-2xl">Criar Task</h4>
                     <FormProvider {...form}>
                         <div className="flex flex-col gap-3">
-                            <input className="w-full rounded border-2 px-2 focus:outline-none h-10" {...form.register('titulo')} name="email" type="text" placeholder="Titulo" />
-                            <textarea rows={4} className="w-full rounded border-2 px-2 focus:outline-none" {...form.register('descricao')} name="senha" placeholder="Descrição" />
-                            <input className="w-full rounded border-2 px-2 focus:outline-none h-10" {...form.register('tags')} name="email" type="text" placeholder="Tags utilizar (,)" />
+                            <TextInput name="titulo" label="Titulo" placeholder="Digite o título da task" />
+                            <TextArea name="descricao" label="Descrição" placeholder="Descrição da task" />
+                            {!isLoading && (<AutocompleteForm name="tags" label="Tags" placeholder="Tags" options={responseTag.map((tag: any) => { return { name: tag.nomeTag, value: tag.id } })} />)}
                             <SelectForm name="responsavel" label="Responsável">
                                 {response?.map((usuario: any) => (
                                     <MenuItem key={usuario.id} value={usuario.id}>{usuario.nome}</MenuItem>
@@ -41,8 +93,8 @@ const Task = () => {
                         <button className="w-32 h-8 rounded text-[#fafafa] px-2 bg-[#35c949]" type="submit" onClick={() => submit()}>Enviar</button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
